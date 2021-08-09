@@ -12,18 +12,16 @@ const sixthRecord = document.getElementById('sixth');
 const seventhRecord = document.getElementById('seventh');
 const eightRecord = document.getElementById('eight');
 
-window.onload = function()
-{
+window.onload = function () {
     //adding the event listerner for Mozilla
-    if(window.addEventListener)
+    if (window.addEventListener)
         document.addEventListener('DOMMouseScroll', moveObject, false);
 
     //for IE/OPERA etc
     document.onmousewheel = moveObject;
 }
 
-function moveObject(event)
-{
+function moveObject(event) {
     var delta = 0;
 
     if (!event) event = window.event;
@@ -36,19 +34,19 @@ function moveObject(event)
         delta = -event.detail / 2;
     }
 
-    let currPos=recordList.offsetTop;
-    
+    let currPos = recordList.offsetTop;
+
     //calculating the next position of the object
-    currPos=parseInt(currPos)-(delta*10);
-    
+    currPos = parseInt(currPos) - (delta * 10);
+
     // Stops from scrolling down further
-    if(delta > 0 && currPos <= -350) return;
-    
+    if (delta > 0 && currPos <= -350) return;
+
     // Stops from scrolling up further
-    if(delta < 0 && currPos >= 25) return;
+    if (delta < 0 && currPos >= 25) return;
 
     //moving the position of the object
-    recordList.style.top = currPos+"px";
+    recordList.style.top = currPos + "px";
 }
 
 let isSorted = false;
@@ -75,13 +73,12 @@ function resetAnimation() {
 }
 
 sortRecords.addEventListener('click', () => {
-    if(isSorted || isEmpty) {
+    if (isSorted || isEmpty) {
         isSorted = false;
         isEmpty = false;
         resetAnimation();
         return;
-    }
-    else isSorted = true;
+    } else isSorted = true;
     recordList.style.transition = 'all 800ms ease-in-out';
     secondRecord.style.transform = "translateX(190px)";
     thirdRecord.style.transform = "translateX(-190px)";
@@ -156,20 +153,19 @@ sortRecords.addEventListener('click', () => {
     }, 11100);
 });
 
-clearRecords.addEventListener('click', () => { 
-    if(isEmpty) {
+clearRecords.addEventListener('click', () => {
+    if (isEmpty) {
         isEmpty = false;
         resetAnimation();
         return;
-    }
-    else isEmpty = true;
+    } else isEmpty = true;
     const baseShift = 360;
     const records = recordList.children;
-    for(let record of records) {
+    for (let record of records) {
         record.style.transition = 'all 1500ms cubic-bezier(0.68, -0.6, 0.32, 1.6)';
     }
-    for(let i = 1; i <= records.length; i++) {
-        records[i-1].style.transform = "translateX("+(baseShift*i)+"px)";
+    for (let i = 1; i <= records.length; i++) {
+        records[i - 1].style.transform = "translateX(" + (baseShift * i) + "px)";
     }
     noHistoryFound.style.transform = "translateX(0px)"
 });
